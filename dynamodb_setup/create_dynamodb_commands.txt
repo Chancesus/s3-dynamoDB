@@ -1,0 +1,3 @@
+aws dynamodb create-table \
+    --attribute-definitions \
+      AttributeName=ShipClass,AttributeType=S \
