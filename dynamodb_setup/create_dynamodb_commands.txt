@@ -1,3 +1,15 @@
+## Create DynamoDB Table
+
 aws dynamodb create-table \
+    --table-name Starships \
     --attribute-definitions \
       AttributeName=ShipClass,AttributeType=S \
+      AttributeName=Registry,AttributeType=S \
+    --key-schema \
+      AttributeName=ShipClass,KeyType=HASH \
+      AttributeName=Registry,KeyType=RANGE \
+    --provisioned-throughput \
+      ReadCapacityUnits=5,WriteCapacityUnits=5 \
+    --region us-east-1
+    
+    
