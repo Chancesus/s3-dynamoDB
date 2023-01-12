@@ -1,12 +1,56 @@
+#Import Required Libraries
+import csv
 import boto3
+import json
 
-s3_client = boto3.client("s3")
+PARTITION_KEY = 'ShipClass'
+SORT_KEY = 'Registry'
 
 def lambda_handler(event, context):
-    bucket_name = event['Records'][0]['s3']['bucket']['name']
-    s3_file_name = event['Records'][0]['s3']['object']['key']
-    resp = s3_client.get_object(Bucket=bucket_name,Key=s3_file_name)
-    data = resp['Body'].read().decode("utf-8")
-    starships = data.split("\\n")
-    for ships in starships:
-        print(ships)
+    region = "us-east-1"
+    record_list = []
+    
+    try:
+        s3 = boto3.client("s3")
+        dynamodb = boto3.client('dynamodb', region_name = region)
+        bucket = event["Records"][0]['s3']['bucket']['name']
+        key = event['Records'][0]['s3']['object']['key']
+        
+        print("Bucket: ", bucket, 'Key: ', key)
+        
+        csv_file = s3.get_object(Bucket = bucket, Key = key)
+        
+        record_list = csv_file['Body'].read().decode('utf-8').split('\n')
+        
+        csv_reader = csv.reader(record_list, delimiter=",", quotechar='"')
+        
+        for row in csv_reader:
+            name = row[0]
+            registry = row[1]
+            ship_class = row[2]
+            description = row[3]
+            print('Name: ', name, 'Registry: ', registry, 'Ship_class: ', ship_class, 'Description: ', description)
+            
+            add_to_db = dynamodb.put_item(
+                TableName = 'Starships',
+                Item = {
+                    PARTITION_KEY: {'S': 'ShipClass'},
+                    SORT_KEY: {'S': 'Registry'},
+                    'name' : {'S': str(name)},
+                    'registry' : {'S': str(registry)},
+                    'ship_class' : {'S': str(ship_class)},
+                    'description' : {'S': str(description)},
+                })
+            print("Successfully added record to DynamoDB")
+        
+        
+    except Exception as e:
+        print(str(e))
+        
+    
+        
+    return {
+        'statusCode' : 200,
+        'body' : json.dumps('Success')
+    }
+        
