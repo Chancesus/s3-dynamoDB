@@ -1,4 +1,3 @@
-#Import Required Libraries
 import csv
 import boto3
 import json
@@ -10,44 +9,36 @@ def lambda_handler(event, context):
     region = "us-east-1"
     record_list = []
     
-    try:
-        s3 = boto3.client("s3")
-        dynamodb = boto3.client('dynamodb', region_name = region)
-        bucket = event["Records"][0]['s3']['bucket']['name']
-        key = event['Records'][0]['s3']['object']['key']
+    s3 = boto3.client("s3")
+    dynamodb = boto3.client('dynamodb', region_name = region)
+    
+    bucket = event["Records"][0]['s3']['bucket']['name']
+    
+    key = event['Records'][0]['s3']['object']['key']
+    
+    csv_file = s3.get_object(Bucket = bucket, Key = key)
+    
+    record_list = csv_file['Body'].read().decode('utf-8').split('\n')
+    
+    csv_reader = csv.DictReader(record_list, delimiter=',', quotechar='"')
+    
+    for row in csv_reader:
+        name = row['name']
+        registry = row['registry']
+        ship_class = row['ship_class']
+        description = row['description']
         
-        print("Bucket: ", bucket, 'Key: ', key)
-        
-        csv_file = s3.get_object(Bucket = bucket, Key = key)
-        
-        record_list = csv_file['Body'].read().decode('utf-8').split('\n')
-        
-        csv_reader = csv.reader(record_list, delimiter=",", quotechar='"')
-        
-        for row in csv_reader:
-            name = row[0]
-            registry = row[1]
-            ship_class = row[2]
-            description = row[3]
-            print('Name: ', name, 'Registry: ', registry, 'Ship_class: ', ship_class, 'Description: ', description)
-            
-            add_to_db = dynamodb.put_item(
-                TableName = 'Starships',
+        try: 
+           add_to_db = dynamodb.put_item(
+            TableName = 'Starships',
                 Item = {
-                    PARTITION_KEY: {'S': 'ShipClass'},
-                    SORT_KEY: {'S': 'Registry'},
                     'name' : {'S': str(name)},
-                    'registry' : {'S': str(registry)},
-                    'ship_class' : {'S': str(ship_class)},
+                    SORT_KEY: {'S': str(registry)},
+                    PARTITION_KEY: {'S':str(ship_class)},
                     'description' : {'S': str(description)},
                 })
-            print("Successfully added record to DynamoDB")
-        
-        
-    except Exception as e:
-        print(str(e))
-        
-    
+        except Exception as e:
+            print("Failed")
         
     return {
         'statusCode' : 200,
