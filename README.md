@@ -1,5 +1,4 @@
-# s3-dynamoDB
-CSV to DynamoDB from S3 upload (Using Lambda)
+#CSV to DynamoDB from S3 upload (Using Lambda)
 
 Prerequisites
 
