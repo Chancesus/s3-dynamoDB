@@ -40,7 +40,7 @@
 
 2. Next, go ahead and give your bucket a name. Something realated to the data or project then followed by "-bucket" is always helpful.(One thing to note, names must be globally unique, so time to be creative!)
    
-   ![](C:\Portfolio\Amazon%20Projects\Test%20-%20S3-Lambda-DynamoDB\Read%20Me%20Screenshots\CreateBucketScreenshot.PNG)  
+   ![](https://github.com/Chancesus/s3-dynamoDB/blob/main/Read%20Me%20Screenshots/CreateBucketScreenshot.PNG)  
    
    
 
@@ -56,13 +56,13 @@
    
    
    
-   ![](C:\Portfolio\Amazon%20Projects\Test%20-%20S3-Lambda-DynamoDB\Read%20Me%20Screenshots\InstanceTypeScreenShot.PNG)  
+   ![](https://github.com/Chancesus/s3-dynamoDB/blob/main/Read%20Me%20Screenshots/InstanceTypeScreenShot.PNG)  
 
 3. AWS will start creating your enviorment, this may take a few minutes. Click on your environment, once it is finished it will show a green "Ready" status check and you can click the "Open in Cloud9" button in the top right.    
    
    
    
-   ![](C:\Portfolio\Amazon%20Projects\Test%20-%20S3-Lambda-DynamoDB\Read%20Me%20Screenshots\OpenCloud9.PNG)
+   ![](https://github.com/Chancesus/s3-dynamoDB/blob/main/Read%20Me%20Screenshots/OpenCloud9.PNG)
 
 4. Your Cloud9 environment is now ready to go! We will be using the terminal at the bottom to set up our DynamoDb table and source control.
    
@@ -74,7 +74,7 @@
 
 2. There are many options to creating a table, if you would like to view them all, you can [[create-table &mdash; AWS CLI 1.27.49 Command Reference](https://docs.aws.amazon.com/cli/latest/reference/dynamodb/create-table.html)](here). What you need will depend on the data you want to read. I will be using the required commands plus "provisioned throughput" and "region". 
 
-3.  <img title="" src="file:///C:/Portfolio/Amazon%20Projects/Test%20-%20S3-Lambda-DynamoDB/Read%20Me%20Screenshots/CreateDynamoDb.PNG" alt="" width="670">
+3.  <img title="" src="https://github.com/Chancesus/s3-dynamoDB/blob/main/Read%20Me%20Screenshots/CreateDynamoDb.PNG" alt="" width="670">
    
    All of this needs to be called in the same command, so I will walk through what each section means then you can customize to your needs.
 
@@ -92,11 +92,11 @@
 
 1. This is where the heavy lifting of the project is done. I will break down the Lambda function into parts and explain each one. First you will need to create your Lambda function in the AWS Mangemnet Console. Here you will give it a name and need to change the Runtime to "Python 3.9". After that, create the function.
    
-   ![](C:\Portfolio\Amazon%20Projects\Test%20-%20S3-Lambda-DynamoDB\Read%20Me%20Screenshots\CreateLambdaFunc.PNG)
+   ![](https://github.com/Chancesus/s3-dynamoDB/blob/main/Read%20Me%20Screenshots/CreateLambdaFunc.PNG)
 
 2. You should be taken too this screen, this is where we will put our code.
    
-   ![](C:\Portfolio\Amazon%20Projects\Test%20-%20S3-Lambda-DynamoDB\Read%20Me%20Screenshots\LambdaStartScreen.PNG)
+   ![](https://github.com/Chancesus/s3-dynamoDB/blob/main/Read%20Me%20Screenshots/LambdaStartScreen.PNG)
 
 3.  Let's look at the first snippet of our code. These are the imported python libraries that we will need for this project. CSV library will help us read our csv file. Boto3 library will let us use python aws commands. 
    
