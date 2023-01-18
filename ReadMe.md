@@ -64,7 +64,7 @@
    
    ![](C:\Portfolio\Amazon%20Projects\Test%20-%20S3-Lambda-DynamoDB\Read%20Me%20Screenshots\OpenCloud9.PNG)
 
-4. Your Cloud9 environment is now ready to go! We will be using the terminal at the bottom to set up our DynamoDb table and source control ()
+4. Your Cloud9 environment is now ready to go! We will be using the terminal at the bottom to set up our DynamoDb table and source control.
    
    
 
@@ -82,7 +82,7 @@
 
 5. Attribute-Definitions: This describes the attritube for the key schema in the table. It is followed by its data type. In my case, both are "S" for string. The other two options are "N" for number and "B" for Binary. 
 
-6. Key-Schema: This defines what will be your Partition and Sort Key. Only a partition key is needed but a sort key can be added to help orgainze/search for data. In my case, ShipClass is my Partition key (HASH) and Registry is my sort key (RANGE). When choosing your Partition key it is best to choose something that is somewhat balanced in distribution across the dataset. You can find an in depth guide for choosing a Partition key [here].([Choosing the Right DynamoDB Partition Key | AWS Database Blog](https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/))
+6. Key-Schema: This defines what will be your Partition and Sort Key. Only a partition key is needed but a sort key can be added to help organize/search for data. In my case, ShipClass is my Partition key (HASH) and Registry is my sort key (RANGE). When choosing your Partition key it is best to choose something that is somewhat balanced in distribution across the dataset. You can find an in depth guide for choosing a Partition key [here].([Choosing the Right DynamoDB Partition Key | AWS Database Blog](https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/))
 
 7. Finally, I add "provisioned throughput" and "region" commands just as a safe guard. The recommend RCUs and WCUs are 5 for free tier, but this will increase with the size and scope of your data set. It is always important to make sure you are operating in the same region or else it can cause unneccesary problems.
 
@@ -105,7 +105,7 @@
    import boto3
    ```
 
-4. Here we first define our Partition and Sort keys. Next we define our Lambda Function. Specify the region we are in. And finally, initialize an empyt list that we will use later for our CSV file.  (All other code should be under lambda_handler)
+4. Here we first define our Partition and Sort keys. Next we define our Lambda Function. Specify the region we are in. And finally, initialize an empty list that we will use later for our CSV file.  (All other code should be under lambda_handler)
    
    ```python
    PARTITION_KEY = "ShipClass"
@@ -126,7 +126,7 @@
    key = event["Records"][0]["s3"]["object"]["key"]
    ```
 
-6. Our next step is to actually read the CSV file. First, we get the csv file using the s3.get_object command. Next we assign that file to our empty list and read it. Lastly, utilize our CSV library by passing in our csv file using the "record_list" we just stored it in. It is important to note that I used ".DictReader" here beause my data set included headers. If your data set doesn't include headers then just use ".Reader"
+6. Our next step is to actually read the CSV file. First, we get the csv file using the s3.get_object command. Next, we assign that file to our empty list and read it. Lastly, utilize our CSV library by passing in our csv file using the "record_list" we just stored it in. It is important to note that I used ".DictReader" here beause my data set included headers. If your data set doesn't include headers then just use ".Reader"
    
    ```python
    csv_file = s3.get_object(Bucket = bucket, Key = key)
@@ -166,9 +166,9 @@
 
 ## Step 5 - Using Git and Github (Optional)
 
-1. If you would like to upload your code/steps to github you can do that through Cloud9
+1. If you would like to upload your code/steps to github you can do that through Cloud9.
 
-2. In the terminal, run the commands
+2. In the terminal, run the commands.
    
    ```bash
    git config --global user.name "YourUsername"
@@ -188,4 +188,4 @@
    git push
    ```
 
-# That's all fokes! Thank you for taking the time to read my guide and I hope it helped!
+# That's all folks! Thank you for taking the time to read my guide and I hope it helped!
