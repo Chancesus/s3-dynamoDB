@@ -34,7 +34,7 @@
    
    
    
-   ![](https://github.com/Chancesus/s3-dynamoDB/blob/6581af19bb5ee7c2707e73617b8759106265fbf3/Read%20Me%20Screenshots/CreateBucketScreenshot.PNG)  
+   ![](https://github.com/Chancesus/s3-dynamoDB/blob/main/Read%20Me%20Screenshots/createS3bucket.jpg)  
    
    
 
